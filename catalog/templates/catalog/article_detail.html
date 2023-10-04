@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+{% load tags %}
+{% block content %}
+
+<div class="container">
+    <a class="btn btn-outline-success" href="{% url 'update' object.pk %}">Редактировать запись</a>
+    <a class="btn btn-outline-danger" href="{% url 'delete' object.pk %}">Удалить запись</a>
+    <h1 class="display-4">{{ object.title }}</h1>
+    <p>Запить создана {{ object.created_at }}</p>
+    <p>Пользователь: {{ object.user }}</p>
+    <p>Количество просмотров: {{ object.views_count }}</p>
+</div>
+
+<div class="container">
+    <div class="card mb-4 box-shadow">
+        <img src="{% mediapath object.preview %}" alt="Упс!">
+        <div class="card-body">
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <p>
+                    {{ object.content }}
+                </p>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
