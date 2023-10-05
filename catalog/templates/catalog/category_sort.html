@@ -36,8 +36,8 @@
                     <p class="card-text">Категория: {{ object.category }}</p>
                     <a href="{% url 'view' object.pk %}" class="btn btn-sm btn-outline-primary" role="button">Посмотреть</a>
                     {% if user.is_authenticated %}
-                        <a href="{% url 'update' object.pk %}" class="btn btn-sm btn-outline-primary">Изменить</a>
-                        <a href="{% url 'delete' object.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
+                    <a href="{% url 'update' object.pk %}" class="btn btn-sm btn-outline-primary">Изменить</a>
+                    <a href="{% url 'delete' object.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
                     {% endif %}
                 </div>
             </div>

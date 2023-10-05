@@ -1,9 +1,32 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import render
 from pytils.translit import slugify
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from catalog.models import Article
+from catalog.models import Article, Category
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = "catalog/categories_list.html"
+
+
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ('category_name',)
+    success_url = reverse_lazy('category')
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_content = form.save()
+            new_content.save()
+
+        return super().form_valid(form)
+
+
+class CategoryDeleteView(DeleteView):
+    model = Category
+    success_url = reverse_lazy('category')
 
 
 class BaseListView(ListView):
@@ -18,7 +41,7 @@ class CatalogListView(ListView):
 
 class ArticleCreateView(CreateView):
     model = Article
-    fields = ('title', 'content', 'preview',)
+    fields = ('title', 'content', 'category',)
     success_url = reverse_lazy('catalog')
 
     def form_valid(self, form):
@@ -35,7 +58,6 @@ class ArticleListView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_published=True)
         return queryset
 
 
@@ -51,7 +73,7 @@ class ArticleDetailView(DetailView):
 
 class ArticleUpdateView(UpdateView):
     model = Article
-    fields = ('title', 'content', 'preview',)
+    fields = ('title', 'content', 'category',)
 
     def form_valid(self, form):
         if form.is_valid():
@@ -70,8 +92,15 @@ class ArticleDeleteView(DeleteView):
     success_url = reverse_lazy('catalog')
 
 
-def toggle_activity(pk):
-    article_item = get_object_or_404(Article, pk=pk)
-    article_item.is_published = False if article_item.is_published else True
-    article_item.save()
-    return redirect(reverse('catalog'))
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = "catalog/category_sort.html"
+    context_object_name = 'category'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = self.model.objects.all()
+        context['articles'] = Article.objects.all()
+        context['category_articles'] = self.object.all()
+        return context
+
