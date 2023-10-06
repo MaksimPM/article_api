@@ -27,7 +27,7 @@
 
 - МИГРАЦИИ
 
-Для миграции требуется в командную строку ввести python3 manage.py makemigrations
+Для миграции требуется в командную строку ввести python3 manage.py makemigrations\
 Затем приметь миграции по команде python3 manage.py migrate
 
 - РЕГИСТРАЦИЯ АДМИНА
