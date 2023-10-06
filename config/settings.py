@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test_project_database',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
+        'NAME': '****',
+        'USER': '****',
+        'PASSWORD': '****',
     }
 }
 
@@ -140,6 +140,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'mapaxomov@yandex.ru'
+EMAIL_HOST_USER = '****@yandex.ru'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_USE_SSL = True

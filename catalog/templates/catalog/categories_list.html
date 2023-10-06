@@ -9,7 +9,7 @@
                 {% endif %}
                 {% for object in object_list %}
                     <div class="card-body">
-                        <a class="btn btn-outline-primary" href="{% url 'category' %}">{{ object.category_name }}</a>
+                        <a class="btn btn-outline-primary" href="{% url 'sort_category' object.pk %}">{{ object.category_name }}</a>
                         {% if user.is_authenticated %}
                             <a class="btn btn-outline-danger" href="{% url 'delete_category' object.pk %}">Удалить категорию</a>
                         {% endif %}

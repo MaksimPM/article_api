@@ -92,15 +92,9 @@ class ArticleDeleteView(DeleteView):
     success_url = reverse_lazy('catalog')
 
 
-class CategoryDetailView(DetailView):
-    model = Category
-    template_name = "catalog/category_sort.html"
-    context_object_name = 'category'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = self.model.objects.all()
-        context['articles'] = Article.objects.all()
-        context['category_articles'] = self.object.all()
-        return context
+def sort_articles(request, **kwargs):
+    category_pk = kwargs.get('pk')
+    queryset = Article.objects.filter(category=category_pk)
+    context = {'queryset': queryset, 'category_pk': category_pk}
+    return render(request, 'catalog/category_sort.html', context)
 
